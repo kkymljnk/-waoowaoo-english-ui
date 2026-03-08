@@ -17,9 +17,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Lowercase Repository Name
+      - name: Lowercase and Sanitize Repository Name
         run: |
-          echo "REPO_LC=${GITHUB_REPOSITORY,,}" >> ${GITHUB_ENV}
+          # Docker tags cannot contain components starting with a hyphen (e.g., /-waoo...)
+          SANITIZED=$(echo "${GITHUB_REPOSITORY,,}" | sed 's/\/-/\//g')
+          echo "REPO_LC=${SANITIZED}" >> ${GITHUB_ENV}
 
       - name: Log in to GHCR
         uses: docker/login-action@v3
