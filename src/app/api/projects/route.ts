@@ -111,11 +111,13 @@ export const GET = apiHandler(async (request: NextRequest) => {
 
   // 构建费用映射表
   const costMap = new Map(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     costsByProject.map((item: any) => [item.projectId, toMoneyNumber(item._sum.cost)])
   )
 
   // 构建统计映射表 + 第一集预览
   const statsMap = new Map<string, { episodes: number; images: number; videos: number; panels: number; firstEpisodePreview: string | null }>(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     novelProjects.map((np: any) => {
       let imageCount = 0
       let videoCount = 0
